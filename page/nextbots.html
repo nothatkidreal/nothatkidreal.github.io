@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHK's Nextbots</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 100vw;
+            height: 56.25vw; /* 16:9 aspect ratio */
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slide:nth-child(1) {
+            background-image: url('path/to/first/showcase/image.png');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Din Alternate', sans-serif;
+        }
+        .slide:nth-child(2) {
+            background-color: #1a1a1a;
+        }
+        .slide:nth-child(3) {
+            background-image: url('path/to/second/showcase/image.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .downloads {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .download-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .copyright {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        NHK'S NEXTBOTS
+    </div>
+    <div class="slide">
+    <h2>About NHK's Nextbots</h2>
+    <p>
+        NHK's Nextbots is an adrenaline-pumping Minecraft game where relentless PNGs hunt you down. Your mission? Survive the pixelated onslaught and, of course, annoy your friends in the process.
+    </p>
+    <p>
+        The game combines the thrill of survival with the chaos of PNGs on the loose. Will you outwit them or become their pixelated prey?
+    </p>
+</div>
+    <div class="slide">
+        <div class="downloads">
+            <a href="Nextbots.mcworld" class="download-btn">Download Nextbots.mcworld</a>
+            <a href="Copy_me_to_your_agent.nxtbt" class="download-btn">Download Makecode Agent Script</a>
+        </div>
+        <div class="masked-image"></div>
+    </div>
+    <div class="slide">
+        <p class="copyright">NHK Creative, 2024. Contact: nothatkid@outlook.com</p>
+    </div>
+</body>
+</html>
