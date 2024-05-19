@@ -4,86 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NHK's Nextbots</title>
+    <link href="https://fonts.googleapis.com/css2?family=Din+Condensed:wght@700&family=Arial&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            background-color: #f4f4f4;
+            overflow-x: hidden;
         }
         .slide {
             width: 100vw;
-            height: 56.25vw; /* 16:9 aspect ratio */
-            position: absolute;
-            top: 0;
-            left: 0;
+            height: 100vh; /* full viewport height */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #ffffff;
-            font-size: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
         .slide:nth-child(1) {
-            background-image: url('path/to/first/showcase/image.png');
+            background-image: url('sc1.png');
             background-size: cover;
             background-position: center;
-            font-family: 'Din Alternate', sans-serif;
+            font-family: 'Din Condensed', sans-serif;
         }
-        .slide:nth-child(2) {
+        .slide:nth-child(2), .slide:nth-child(4) {
             background-color: #1a1a1a;
+            color: #ffffff;
         }
         .slide:nth-child(3) {
-            background-image: url('path/to/second/showcase/image.png');
+            background-image: url('sc2.png');
             background-size: cover;
             background-position: center;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
         }
         .downloads {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            gap: 20px; /* spacing between buttons */
         }
         .download-btn {
-            margin: 10px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: #ff6600;
             color: #ffffff;
             text-decoration: none;
-            border-radius: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
         }
         .copyright {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
             font-size: 0.8rem;
+            color: #cccccc;
         }
     </style>
 </head>
 <body>
     <div class="slide">
-        NHK'S NEXTBOTS
+        <h1>NHK's Nextbots</h1>
     </div>
     <div class="slide">
-    <h2>About NHK's Nextbots</h2>
-    <p>
-        NHK's Nextbots is an adrenaline-pumping Minecraft game where relentless PNGs hunt you down. Your mission? Survive the pixelated onslaught and, of course, annoy your friends in the process.
-    </p>
-    <p>
-        The game combines the thrill of survival with the chaos of PNGs on the loose. Will you outwit them or become their pixelated prey?
-    </p>
-</div>
+        <h2>About NHK's Nextbots</h2>
+        <p>
+            Dive into the adrenaline-pumping world of NHK's Nextbots, a Minecraft game where relentless PNGs chase you relentlessly. Can you survive their pixelated fury and beat your friends in this thrilling game?
+        </p>
+    </div>
     <div class="slide">
         <div class="downloads">
-            <a href="Nextbots.mcworld" class="download-btn">Download Nextbots.mcworld</a>
-            <a href="Copy_me_to_your_agent.nxtbt" class="download-btn">Download Makecode Agent Script</a>
+            <a href="Nextbots.mcworld" class="download-btn">Download Game (.mcworld)</a>
+            <a href="Copy_me_to_your_agent.nxtbt" class="download-btn">Download Script (.nxtbt)</a>
         </div>
-        <div class="masked-image"></div>
     </div>
     <div class="slide">
-        <p class="copyright">NHK Creative, 2024. Contact: nothatkid@outlook.com</p>
+        <p class="copyright">
+            &copy; 2024 NHK Creative. Contact: nothatkid@outlook.com
+        </p>
     </div>
 </body>
 </html>
