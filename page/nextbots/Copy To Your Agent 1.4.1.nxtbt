@@ -1,0 +1,387 @@
+function startgameMansion () {
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§cLoading nextbots.", "Spawning Nextbots.")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound note.iron_xylophone @s ~ ~ ~ 1 1"
+    )
+    for (let index = 0; index < nbCount; index++) {
+        player.execute(
+        "summon " + entitylist._pickRandom() + " " + ("" + positionList._pickRandom())
+        )
+    }
+    loops.pause(randint(100, 1200))
+    blocks.place(REDSTONE_BLOCK, world(14, -61, 12))
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§c3", "Spawning in 3")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 1"
+    )
+    loops.pause(1000)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§c2", "Spawning in 2")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 1"
+    )
+    loops.pause(1000)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§c1", "Spawning in 1")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 1"
+    )
+    loops.pause(1000)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§cGood Luck!", "Round Started!")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 2"
+    )
+    player.execute(
+    "tp @a " + positionList._pickRandom()
+    )
+    cueMusic()
+}
+player.onChat("!VoteAgain", function () {
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set @s voted 0"
+    )
+})
+player.onChat("!end", function () {
+    endGame()
+})
+player.onChat("!start", function () {
+    if (blocks.testForBlock(RED_WOOL, world(18, -60, 15))) {
+        player.execute(
+        "say §l§c[ ! ] Votes are equal, deciding map on random."
+        )
+        loops.pause(500)
+        if (randint(1, 2) == 1) {
+            player.execute(
+            "say §l§c[ ! ] Starting game, Map: §l§7The Caves "
+            )
+            startgameCaves()
+        } else {
+            player.execute(
+            "say §l§c[ ! ] Starting game, Map: §l§iThe Mansion "
+            )
+            startgameMansion()
+        }
+    } else {
+        if (blocks.testForBlock(WOOL, world(18, -60, 15))) {
+            player.execute(
+            "say §l§c[ ! ] Starting game, Map: §l§iThe Mansion "
+            )
+            startgameMansion()
+        } else {
+            if (blocks.testForBlock(GRAY_WOOL, world(18, -60, 15))) {
+                player.execute(
+                "say §l§c[ ! ] Starting game, Map: §l§iThe Caves "
+                )
+                startgameCaves()
+            } else {
+                player.execute(
+                "say ! §l§cError | Could not identify scoring. Please vote for both maps (or one) then run this again."
+                )
+                player.execute(
+                "say ! §l§cError | If you have deleted any scoreboard, I recommend that you re-install this map via nothatkid.com/nextbots"
+                )
+                player.execute(
+                "say ! §l§cError | I would not recommend messing around with the map, due to how messy/janky the code is."
+                )
+            }
+        }
+    }
+})
+player.onChat("!ResetVotes", function () {
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set @s voted 0"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set \"§l§iThe Mansion\" Votes 0"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set \"§l§7The Caves\" Votes 0"
+    )
+})
+function endGame () {
+    player.execute(
+    "kill @e[tag=nb]"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "stopsound @s"
+    )
+    mobs.applyEffect(BLINDNESS, mobs.target(ALL_PLAYERS), 97, 255)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§cGame over!", "")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "/playsound mob.evocation_illager.cast_spell @s ~ ~ ~ 1.0 1.0"
+    )
+    listInd = 0
+    player.execute(
+    "setblock 14 -61 12 air"
+    )
+    player.execute(
+    "setblock 14 -61 14 air"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set @s voted 0"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set \"§l§iThe Mansion\" Votes 0"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "scoreboard players set \"§l§7The Caves\" Votes 0"
+    )
+    player.execute(
+    "tp @a 22 -59.9 54"
+    )
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "/playsound beacon.power @s ~ ~ ~ 1.0 1.0"
+    )
+    mobs.clearEffect(mobs.target(ALL_PLAYERS))
+    player.execute(
+    "setworldspawn 22 -60 54"
+    )
+}
+loops.forever(function () {
+    player.execute(
+    "/titleraw @a actionbar {\"rawtext\": [{\"text\": \"§l§cNextbot Count: \"}, {\"score\":{\"name\": \"nxtbt\",\"objective\": \"statsraw\"}}, {\"text\": \"§f | §l§3Player Count: \"}, {\"score\":{\"name\": \"player\",\"objective\": \"statsraw\"}}]}"
+    )
+})
+loops.forever(function () {
+    listInd2 = 0
+    for (let index = 0; index < entitylist.length; index++) {
+        player.execute(
+        "tag @e[type=" + entitylist[listInd2] + "] add nb"
+        )
+        listInd2 += 1
+    }
+})
+function startgameCaves () {
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§cLoading nextbots.", "")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound note.iron_xylophone @s ~ ~ ~ 1 1"
+    )
+    for (let index = 0; index < nbCount; index++) {
+        player.execute(
+        "summon " + entitylist._pickRandom() + " " + ("" + positionList2._pickRandom())
+        )
+    }
+    loops.pause(randint(100, 1200))
+    blocks.place(REDSTONE_BLOCK, world(14, -61, 14))
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§c3", "")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 1"
+    )
+    loops.pause(1000)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§c2", "")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 1"
+    )
+    loops.pause(1000)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§c1", "")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 1"
+    )
+    loops.pause(1000)
+    gameplay.title(mobs.target(ALL_PLAYERS), "§l§cGood Luck!", "Round Started!")
+    mobs.execute(
+    mobs.target(ALL_PLAYERS),
+    pos(0, 0, 0),
+    "playsound item.trident.hit @s ~ ~ ~ 1 2"
+    )
+    player.execute(
+    "tp @a " + positionList2._pickRandom()
+    )
+    cueMusic()
+}
+function cueMusic () {
+    loops.pause(10)
+    if (randint(0, 1) == 1) {
+        mobs.execute(
+        mobs.target(ALL_PLAYERS),
+        pos(0, 0, 0),
+        "music play record.13 1"
+        )
+    } else {
+        mobs.execute(
+        mobs.target(ALL_PLAYERS),
+        pos(0, 0, 0),
+        "music play record.wait 1"
+        )
+    }
+    loops.pause(160000)
+    player.execute(
+    "say §c[ ! ] Nextbots are angered! 20 seconds left!"
+    )
+    player.execute(
+    "effect @e[tag=nb] speed 25 2 true"
+    )
+    loops.pause(20000)
+    endGame()
+}
+let listInd2 = 0
+let listInd = 0
+let entitylist: string[] = []
+let positionList2: Position[] = []
+let positionList: Position[] = []
+let nbCount = 0
+nbCount = 6
+positionList = [
+world(-4, -50, 37),
+world(-8, -50, 16),
+world(-10, -59, 20),
+world(-9, -59, 33),
+world(6, -59, 33),
+world(8, -54, 39),
+world(8, -53, 36),
+world(6, -50, 42),
+world(-4, -54, 40),
+world(-6, -54, 30),
+world(2, -59, 19),
+world(-11, -54, 27),
+world(-11, -55, 9),
+world(-12, -46, 13),
+world(-12, -46, 33),
+world(-2, -46, 13),
+world(-1, -46, 36),
+world(-1, -54, 19),
+world(15, -59, 40),
+world(18, -59, 28)
+]
+positionList2 = [
+world(41, -56, 16),
+world(41, -56, 16),
+world(52, -56, 16),
+world(49, -54, 20),
+world(54, -54, 19),
+world(52, -54, 0),
+world(51, -54, -6),
+world(47, -54, -8),
+world(44, -54, -10),
+world(38, -59, -10),
+world(44, -58, -3),
+world(45, -59, 3),
+world(48, -58, 4),
+world(53, -58, 3),
+world(43, -59, 18),
+world(53, -59, 18),
+world(48, -59, 14),
+world(43, -59, 14),
+world(35, -59, 13)
+]
+entitylist = [
+"mp:selene",
+"mp:obunga",
+"mp:mr_incredible",
+"mp:marmite",
+"mp:sanic",
+"mp:armstrong",
+"mp:patrick_bateman",
+"mp:smile",
+"mp:uncle",
+"mp:nerd",
+"mp:quandale_dingle",
+"mp:saul_goodman",
+"mp:troll_face",
+"nhk:chat",
+"nhk:mrbeast",
+"nhk:sweetie",
+"nhk:dawg",
+"nhk:kanye",
+"nhk:spaghetti",
+"nhk:rah",
+"nhk:smiley",
+"nhk:latte",
+"nhk:donke",
+"nhk:business",
+"nhk:nuhuh",
+"nhk:dwayne",
+"nhk:stare",
+"nhk:ong",
+"nhk:forgor",
+"nhk:sniff",
+"nhk:sheldon",
+"nhk:creamy",
+"nhk:ravioli",
+"nhk:ben",
+"nhk:gay",
+"nhk:pizza",
+"nhk:problem",
+"nhk:lebron",
+"nhk:bomb",
+"nhk:fact",
+"nhk:mcdon",
+"nhk:balls",
+"nhk:blahaj",
+"nhk:yee",
+"nhk:murder",
+"nhk:child",
+"nhk:heavy",
+"nhk:asked",
+"nhk:pigeon",
+"nhk:bald",
+"nhk:perry",
+"nhk:rock",
+"nhk:ryan",
+"nhk:shoes",
+"nhk:skechers",
+"nhk:swag",
+"nhk:beer",
+"nhk:financial",
+"nhk:fry",
+"nhk:girl",
+"nhk:gogle",
+"nhk:gordon",
+"nhk:manly",
+"nhk:metal",
+"nhk:uninvited",
+"nhk:barbedwire",
+"nhk:damascus",
+"nhk:dofenceburn",
+"nhk:kabluey",
+"nhk:lemonjade",
+"nhk:pancake",
+"nhk:pancake",
+"nhk:spoon",
+"nhk:threepeater",
+"nhk:travies",
+"nhk:well",
+"nhk:babagrill",
+"nhk:cat",
+"nhk:colon3",
+"nhk:rabid",
+"nhk:skibidi",
+"nhk:airfryer",
+"nhk:thiscat"
+]
