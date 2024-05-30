@@ -22,30 +22,55 @@
     </style>
 </head>
 <body>
-    <p>v0.1</p>
+    <p>v0.2<br></p>
     <div id="subscriber-count" class="count">Loading...</div>
     <script>
-    const url = 'https://clubs.rec.net/subscription/subscribercount/29026387';
+        const proxyUrl = 'https://cors.bridged.cc/';
+        const apiUrl = 'https://clubs.rec.net/subscription/subscribercount/29026387';
+        const url = proxyUrl + apiUrl;
 
-    function fetchSubscriberCount() {
-        fetch(url)
+        function fetchSubscriberCount() {
+            fetch(url, {
+                headers: {
+                    'x-cors-grida-api-key': 'nokey' // This header is sometimes needed for the cors.bridged.cc service; 'nokey' is used for open testing.
+                }
+            })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Network response was not ok: ' + response.statusText);
                 }
                 return response.text();
             })
             .then(text => {
-                document.getElementById('subscriber-count').innerText = text;
+                const currentCount = parseInt(document.getElementById('subscriber-count').innerText.replace(/[^0-9]/g, ''), 10);
+                const newCount = parseInt(text, 10);
+                animateCount(currentCount, newCount);
             })
             .catch(error => {
                 console.error('Error fetching data: ', error);
                 document.getElementById('subscriber-count').innerText = 'Error loading data';
             });
-    }
+        }
 
-    setInterval(fetchSubscriberCount, 45000); // update every 45 seconds
-    fetchSubscriberCount(); // initial fetch
-</script>
+        function animateCount(start, end) {
+            if (start < end) {
+                const duration = 1000; // animation time in milliseconds
+                const stepTime = Math.abs(Math.floor(duration / (end - start)));
+                let currentCount = start;
+                const timer = setInterval(() => {
+                    currentCount++;
+                    document.getElementById('subscriber-count').innerText = currentCount;
+                    if (currentCount >= end) {
+                        clearInterval(timer);
+                    }
+                }, stepTime);
+            } else {
+                document.getElementById('subscriber-count').innerText = end;
+            }
+        }
+
+        setInterval(fetchSubscriberCount, 45000); // update every 45 seconds
+        fetchSubscriberCount(); // initial fetch
+    </script>
 </body>
 </html>
