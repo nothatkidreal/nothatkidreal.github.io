@@ -22,28 +22,23 @@
     </style>
 </head>
 <body>
-    <p>v0.2<br></p>
     <div id="subscriber-count" class="count">Loading...</div>
+    <p><br>v0.3</p>
     <script>
-        const proxyUrl = 'https://cors.bridged.cc/';
-        const apiUrl = 'https://clubs.rec.net/subscription/subscribercount/29026387';
-        const url = proxyUrl + apiUrl;
+        const url = 'https://clubs.rec.net/subscription/subscribercount/29026387';
 
         function fetchSubscriberCount() {
-            fetch(url, {
-                headers: {
-                    'x-cors-grida-api-key': 'nokey' // This header is sometimes needed for the cors.bridged.cc service; 'nokey' is used for open testing.
-                }
-            })
+            fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
+                    throw new Error('Network response was not ok');
                 }
                 return response.text();
             })
             .then(text => {
-                const currentCount = parseInt(document.getElementById('subscriber-count').innerText.replace(/[^0-9]/g, ''), 10);
                 const newCount = parseInt(text, 10);
+                const currentCountElement = document.getElementById('subscriber-count');
+                const currentCount = parseInt(currentCountElement.innerText, 10);
                 animateCount(currentCount, newCount);
             })
             .catch(error => {
@@ -65,7 +60,7 @@
                     }
                 }, stepTime);
             } else {
-                document.getElementById('subscriber-count').innerText = end;
+                document.getElementById('subscriber-count').innerText = end.toString();
             }
         }
 
