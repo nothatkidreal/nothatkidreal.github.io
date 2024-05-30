@@ -23,7 +23,7 @@
 </head>
 <body>
     <div id="subscriber-count" class="count">Loading...</div>
-    <p><br>v0.3</p>
+    <p><br>v0.4</p>
     <script>
         const url = 'https://clubs.rec.net/subscription/subscribercount/29026387';
 
@@ -36,32 +36,12 @@
                 return response.text();
             })
             .then(text => {
-                const newCount = parseInt(text, 10);
-                const currentCountElement = document.getElementById('subscriber-count');
-                const currentCount = parseInt(currentCountElement.innerText, 10);
-                animateCount(currentCount, newCount);
+                document.getElementById('subscriber-count').innerText = text.trim();
             })
             .catch(error => {
                 console.error('Error fetching data: ', error);
                 document.getElementById('subscriber-count').innerText = 'Error loading data';
             });
-        }
-
-        function animateCount(start, end) {
-            if (start < end) {
-                const duration = 1000; // animation time in milliseconds
-                const stepTime = Math.abs(Math.floor(duration / (end - start)));
-                let currentCount = start;
-                const timer = setInterval(() => {
-                    currentCount++;
-                    document.getElementById('subscriber-count').innerText = currentCount;
-                    if (currentCount >= end) {
-                        clearInterval(timer);
-                    }
-                }, stepTime);
-            } else {
-                document.getElementById('subscriber-count').innerText = end.toString();
-            }
         }
 
         setInterval(fetchSubscriberCount, 45000); // update every 45 seconds
