@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeBank</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7e6d4;
+            color: #333;
+        }
+
+        header {
+            background-color: #f5c89d;
+            color: #fdf3e7;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .partner-icons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .partner-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .partner-icons img {
+            margin: 0 10px;
+            /* Adjust as needed */
+        }
+
+        #showcase {
+            background: #fdf3e7;
+            color: #333;
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        #showcase h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        #showcase .intro-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        #partners {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* Add this line */
+            padding: 40px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #partners img {
+            max-width: 100px;
+            max-height: 175px;
+        }
+
+        .stats {
+            text-align: center;
+            padding: 50px 20px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .stats div {
+            display: inline-block;
+            width: 30%;
+            padding: 20px;
+            margin: 10px;
+            background: #f4f4f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-categories,
+        .task-listings {
+            padding: 20px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .task-categories h2,
+        .task-listings h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .task-categories .category,
+        .task-listings .listing {
+            display: inline-block;
+            width: 29.5%;
+            padding: 20px;
+            margin: 10px;
+            background: #f5c89d;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .task-categories .category:hover,
+        .task-listings .listing:hover {
+            background: #ffcc80;
+        }
+
+        .task-categories .category:nth-child(2n+1),
+        .task-listings .listing:nth-child(2n+1) {
+            clear: left;
+        }
+
+        .signup {
+            text-align: center;
+            padding: 50px 20px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .signup h2 {
+            margin-bottom: 20px;
+        }
+
+        .signup button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .signup button:hover {
+            background: #555;
+        }
+
+        footer {
+            background-color: #f5c89d;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .green {
+            color: #cffa81;
+            text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+        }
+
+        .purple {
+            color: #c7bcfb;
+        }
+
+        a {
+            color: inherit;
+            /* This will make the link have the same color as the surrounding text */
+            text-decoration: none;
+            /* This will remove the underline */
+        }
+
+        a:hover {
+            color: inherit;
+            text-decoration: underline;
+            /* This will add the underline when the link is hovered */
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #c7bcfb;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* This will animate the color change */
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* This will change the button color when hovered */
+            color: #fff;
+            /* This will keep the text color the same when hovered */
+            text-decoration: none;
+            /* This will remove the underline when hovered */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>TimeBank</h1>
+            <nav>
+                <a href="dashboard.html">Log In</a> |
+                <a href="dashboard.html">Register</a> |
+                <a href="#">Help!</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <h1>Earn Your <span class="purple">Time Credits</span></h1>
+            <p class="intro-text">Help the elderly in your community and earn time credits you can use for various
+                services.</p>
+        </div>
+    </section>
+
+    <section id="partners">
+        <div class="container">
+            <div class="partner-icons">
+                <img src="partner1.png" alt="The Insurance Co.">
+                <img src="partner2.png" alt="NHK Creative">
+                <img src="partner3.png" alt="MTIA">
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div>
+                <h2>📋 1,500+</h2>
+                <p>Tasks</p>
+            </div>
+            <div>
+                <h2>👥 100+</h2>
+                <p>Support Assistants</p>
+            </div>
+            <div>
+                <h2>🤝 50,000+</h2>
+                <p>Community Members</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <h1>Insurance company?</h1>
+        <a href="mailto:timebankbusiness@gmail.com">Let us know!</a>
+    </section>
+
+    <section class="task-listings">
+        <div class="container">
+            <h2>Popular Tasks</h2>
+            <div class="listing">
+                <h3>🛍️ Groceries</h3>
+                <p>Bring the groceries in.</p>
+            </div>
+            <div class="listing">
+                <h3>💡 Chores</h3>
+                <p>Assist with household chores.</p>
+            </div>
+            <div class="listing">
+                <h3>💬 Conversations</h3>
+                <p>Provide companionship and conversation.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="signup">
+        <div class="container">
+            <h2>Sign Up Now</h2>
+            <p>Join our community and start earning time credits by helping the elderly in your area.</p>
+            <a href="dashboard.html" class="button">Sign Up</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 TimeBank. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7e6d4;
+            /* Light beige background */
+            color: #333;
+            /* Dark text for better readability */
+        }
+
+        .navbar {
+            background-color: #f5c89d;
+            /* Light orange similar to other pages */
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .navbar a:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .main-content {
+            padding: 2rem;
+            padding-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .tasks-section {
+            background-color: #fff;
+            /* White background for the section */
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .tasks-section h2 {
+            color: #333;
+            /* Dark text for contrast on white background */
+            margin-bottom: 1rem;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .task-item {
+            background-color: #fff;
+            /* White to match the tasks section */
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            flex: 1 1 calc(33.333% - 1rem);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 300px;
+        }
+
+        .task-item h3 {
+            margin: 0;
+            color: #555;
+            /* Gray/Grey (dont start this debate :skull:) for task headings */
+        }
+
+        .task-item p {
+            margin: 0;
+            color: #555;
+            /* Grey for text */
+        }
+
+        .task-item .task-owner {
+            color: #333;
+            /* Soft orange, similar to navbar color */
+        }
+
+        .task-item .task-distance {
+            color: #555;
+            /* Grey for distance info */
+        }
+
+        .claim-button,
+        .cancel-button,
+        .accept-button,
+        .deny-button {
+            background-color: #f5c89d;
+            /* Light orange for buttons */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+
+        .claim-button:hover,
+        .cancel-button:hover,
+        .accept-button:hover,
+        .deny-button:hover {
+            background-color: #e4976c;
+            /* A darker shade for hover effects */
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-section input,
+        .form-section textarea {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: none;
+            background-color: #fff;
+            /* White background for form elements */
+            color: #333;
+            /* Dark text for visibility */
+        }
+
+        .form-section button {
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="index.html" title="Home">
+                <span class="material-icons">home</span>
+            </a>
+            <a href="dashboard.html" title="Dashboard">
+                <span class="material-icons">dashboard</span>
+            </a>
+            <a href="tasks.html" title="Tasks">
+                <span class="material-icons">task</span>
+            </a>
+            <a href="rewards.html" title="Rewards">
+                <span class="material-icons">redeem</span>
+            </a>
+            <a href="transactions.html" title="Credits">
+                <span class="material-icons">payments</span>
+            </a>
+            <a href="profile.html" title="Profile">
+                <span class="material-icons">account_circle</span>
+            </a>
+            <a href="index.html" title="Logout">
+                <span class="material-icons">exit_to_app</span>
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="form-section">
+            <h2>Create a Task</h2>
+            <input id="task-title" type="text" placeholder="Task Title" required>
+            <textarea id="task-description" rows="4" placeholder="Task Description" required></textarea>
+            <button id="create-task-button" class="claim-button">Create Task</button>
+        </div>
+        <div class="tasks-section" id="your-tasks-section">
+            <h2>Your Tasks</h2>
+            <p>These are tasks made by you. Create one above!</p>
+            <ul class="task-list" id="your-task-list">
+                <!-- User created tasks will be inserted here by JavaScript -->
+            </ul>
+        </div>
+        <div class="tasks-section">
+            <h2 id="tasks-message">Available Tasks</h2>
+            <ul class="task-list" id="task-list">
+                <!-- Dummy tasks will be inserted here by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tasks = [
+                { title: 'Grocery Shopping', owner: 'Alice Johnson • 13 minutes ago', description: '🛍️ Buy groceries for the week.', distance: '5km' },
+                { title: 'Dog Walking', owner: 'Bob Smith • 29 minutes ago', description: '🐶 Walk the dog for 30 minutes.', distance: '2km' },
+                { title: 'Yard Work', owner: 'Charlie Brown • 8 minutes ago', description: '🌲 Mow the lawn and trim the hedges.', distance: '3km' },
+                { title: 'House Cleaning', owner: 'Diana Prince • 27 minutes ago', description: '🧹 Clean the living room and kitchen.', distance: '1km' },
+                { title: 'Medicine Pickup', owner: 'Evelyn Parker • 46 minutes ago', description: '💊 Pick up prescription medicine from the pharmacy.', distance: '4km' },
+                { title: 'Cooking Meals', owner: 'Frank Miller • 21 minutes ago', description: '🍴 Prepare a healthy meal for dinner.', distance: '2.5km' },
+                { title: 'Gardening', owner: 'Grace Lee • 34 minutes ago', description: '🌲 Help with planting flowers and weeding the garden.', distance: '3.5km' },
+                { title: 'Reading Assistance', owner: 'Henry Green • 6 minutes ago', description: '📰 Read today\'s newspaper aloud for me.', distance: '1.5km' },
+                { title: 'Tech Support', owner: 'Irene Thompson • 44 minutes ago', description: '📱 Assist with setting up a new phone or computer.', distance: '2km' },
+                { title: 'Walking Companion', owner: 'Jack Harris • 39 minutes ago', description: '🚶 Accompany on a daily walk around the neighborhood.', distance: '1km' },
+                { title: 'Laundry Help', owner: 'Karen White • 11 minutes ago', description: '👚 Help with washing and folding clothes.', distance: '3km' },
+                { title: 'Pet Care', owner: 'Liam Wilson • 7 minutes ago', description: '🐈 Feed and groom the cat.', distance: '1.5km' },
+                { title: 'Grocery Delivery', owner: 'Maria Davis • 48 minutes ago', description: '🛍️ Deliver groceries to the house.', distance: '4km' },
+                { title: 'Social Visit', owner: 'Nancy Young • 9 minutes ago', description: '💬 Spend time chatting and keeping company.', distance: '2km' },
+                { title: 'Light Repairs', owner: 'Oscar King • 23 minutes ago', description: '🚿 Help with small home repairs like fixing a leaky faucet.', distance: '2.5km' },
+            ];
+
+            const firstNames = ["John", "Jane", "Michael", "Michelle", "David", "Diana", "James", "Julia", "Robert", "Rachel", "Daniel", "Daisy", "Thomas", "Tina", "Chris", "Catherine", "Paul", "Patricia", "Mark", "Megan", "Andrew", "Anna", "Matthew", "Martha", "Samuel"];
+            const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris"];
+
+            const savedName = localStorage.getItem('profileName') || 'User';
+            const taskList = document.getElementById('task-list');
+            const yourTaskList = document.getElementById('your-task-list');
+            const createTaskButton = document.getElementById('create-task-button');
+
+            document.getElementById('tasks-message').textContent = `Tasks near ${savedName}`;
+
+            tasks.forEach(task => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('task-item');
+
+                const title = document.createElement('h3');
+                title.textContent = task.title;
+
+                const owner = document.createElement('p');
+                owner.classList.add('task-owner');
+                owner.textContent = `Posted by: ${task.owner}`;
+
+                const description = document.createElement('p');
+                description.textContent = task.description;
+
+                const distance = document.createElement('p');
+                distance.classList.add('task-distance');
+                distance.textContent = `Distance: ${task.distance}`;
+
+                const claimButton = document.createElement('button');
+                claimButton.classList.add('claim-button');
+                claimButton.textContent = 'Claim';
+
+                listItem.appendChild(title);
+                listItem.appendChild(owner);
+                listItem.appendChild(description);
+                listItem.appendChild(distance);
+                listItem.appendChild(claimButton);
+
+                taskList.appendChild(listItem);
+            });
+
+            function getRandomName() {
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                return `${firstName} ${lastName}`;
+            }
+
+            function getRandomDistance() {
+                return `${Math.floor(Math.random() * 5) + 1}km`; // Random distance between 1 and 5 km
+            }
+
+            function loadYourTasks() {
+                const storedTasks = JSON.parse(localStorage.getItem('yourTasks')) || [];
+                yourTaskList.innerHTML = '';
+
+                storedTasks.forEach(task => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('task-item');
+
+                    const title = document.createElement('h3');
+                    title.textContent = task.title;
+
+                    const description = document.createElement('p');
+                    description.textContent = task.description;
+
+                    const buttonContainer = document.createElement('div');
+
+                    if (task.accepted) {
+                        const acceptButton = document.createElement('button');
+                        acceptButton.classList.add('accept-button');
+                        acceptButton.textContent = 'Accept';
+                        acceptButton.addEventListener('click', () => {
+                            storedTasks.splice(storedTasks.indexOf(task), 1);
+                            localStorage.setItem('yourTasks', JSON.stringify(storedTasks));
+                            loadYourTasks();
+                        });
+
+                        const denyButton = document.createElement('button');
+                        denyButton.classList.add('deny-button');
+                        denyButton.textContent = 'Deny';
+                        denyButton.addEventListener('click', () => {
+                            storedTasks.splice(storedTasks.indexOf(task), 1);
+                            localStorage.setItem('yourTasks', JSON.stringify(storedTasks));
+                            loadYourTasks();
+                        });
+
+                        buttonContainer.appendChild(acceptButton);
+                        buttonContainer.appendChild(denyButton);
+
+                        const acceptedMessage = document.createElement('p');
+                        acceptedMessage.textContent = `${task.acceptedBy} accepted your task!`;
+                        listItem.appendChild(acceptedMessage);
+                    } else {
+                        const cancelButton = document.createElement('button');
+                        cancelButton.classList.add('cancel-button');
+                        cancelButton.textContent = 'Cancel Task';
+                        cancelButton.addEventListener('click', () => {
+                            storedTasks.splice(storedTasks.indexOf(task), 1);
+                            localStorage.setItem('yourTasks', JSON.stringify(storedTasks));
+                            loadYourTasks();
+                        });
+
+                        buttonContainer.appendChild(cancelButton);
+                    }
+
+                    listItem.appendChild(title);
+                    listItem.appendChild(description);
+                    listItem.appendChild(buttonContainer);
+
+                    yourTaskList.appendChild(listItem);
+
+                    if (!task.accepted) {
+                        setTimeout(() => {
+                            task.accepted = true;
+                            task.acceptedBy = getRandomName();
+                            localStorage.setItem('yourTasks', JSON.stringify(storedTasks));
+                            loadYourTasks();
+                        }, task.timeToAccept);
+                    }
+                });
+            }
+
+            createTaskButton.addEventListener('click', () => {
+                const title = document.getElementById('task-title').value;
+                const description = document.getElementById('task-description').value;
+
+                if (title && description) {
+                    const newTask = {
+                        title,
+                        description,
+                        timeToAccept: Math.floor(Math.random() * (10 - 5 + 1) + 5) * 60000, // Random time between 5 to 10 minutes in milliseconds
+                        accepted: false,
+                        acceptedBy: null
+                    };
+
+                    const storedTasks = JSON.parse(localStorage.getItem('yourTasks')) || [];
+                    storedTasks.push(newTask);
+                    localStorage.setItem('yourTasks', JSON.stringify(storedTasks));
+                    loadYourTasks();
+
+                    // Clear the input fields
+                    document.getElementById('task-title').value = '';
+                    document.getElementById('task-description').value = '';
+                }
+            });
+
+            loadYourTasks();
+        });
+    </script>
+</body>
+
+</html>
