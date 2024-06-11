@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeBank</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7e6d4;
+            color: #333;
+        }
+
+        header {
+            background-color: #f5c89d;
+            color: #fdf3e7;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .partner-icons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .partner-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .partner-icons img {
+            margin: 0 10px;
+        }
+
+        #showcase {
+            background: #fdf3e7;
+            color: #333;
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        #showcase .content {
+            flex: 1;
+        }
+
+        #showcase img {
+            max-width: 200px;
+            vertical-align: bottom;
+        }
+
+        #partners {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 40px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #partners img {
+            max-width: 100px;
+            max-height: 175px;
+        }
+
+        .stats {
+            text-align: center;
+            padding: 50px 20px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .stats div {
+            display: inline-block;
+            width: 30%;
+            padding: 20px;
+            margin: 10px;
+            background: #f4f4f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-categories,
+        .task-listings {
+            padding: 20px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .task-categories h2,
+        .task-listings h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .task-categories .category,
+        .task-listings .listing {
+            display: inline-block;
+            width: 29.5%;
+            padding: 20px;
+            margin: 10px;
+            background: #f5c89d;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .task-categories .category:hover,
+        .task-listings .listing:hover {
+            background: #ffcc80;
+        }
+
+        .signup {
+            text-align: center;
+            padding: 50px 20px;
+            background: #fdf3e7;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .signup h2 {
+            margin-bottom: 20px;
+        }
+
+        .signup button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .signup button:hover {
+            background: #555;
+        }
+
+        footer {
+            background-color: #f5c89d;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .task-listings .listing a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container a {
+            text-decoration: underline;
+            color: inherit;
+        }
+
+        .purple {
+            color: #c7bbfb;
+        }
+
+        .container img {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <img src="timebank.png" width="200" style="display: block; margin: auto;">
+            <nav>
+                <a href="dashboard.html">Log In</a> |
+                <a href="dashboard.html">Register</a> |
+                <a href="#">Help!</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <div class="content">
+                <h1>EARN YOUR <span class="purple"><strong>TIME CREDITS</strong></span></h1>
+                <p class="intro-text">Help the elderly in your community and earn time credits you can use for various
+                    services.</p>
+            </div>
+            <img src="dude.png" alt="Volunteer helping">
+        </div>
+    </section>
+
+    <section id="partners">
+        <div class="container">
+            <div class="partner-icons">
+                <img src="partner1.png" alt="The Insurance Co.">
+                <img src="partner2.png" alt="NHK Creative">
+                <img src="partner3.png" alt="MTIA">
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div>
+                <h2>📋 1,500+</h2>
+                <p><strong>AVAILABLE<br>TASKS</strong></p>
+            </div>
+            <div>
+                <h2>👥 100+</h2>
+                <p><strong>SUPPORT ASSISTANTS</strong></p>
+            </div>
+            <div>
+                <h2>🤝 50,000+</h2>
+                <p><strong>TIMEBANK MEMBERS</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="task-listings">
+        <div class="container">
+            <h2>Popular Tasks</h2>
+            <div class="listing">
+                <a href="tasks.html">
+                    <h3>🛍️ Groceries</h3>
+                    <p>Want to learn how to do groceries?<br>Hundreds of TimeBank members will give you tips!</p>
+                </a>
+            </div>
+            <div class="listing">
+                <a href="tasks.html">
+                    <h3>💡 Chores</h3>
+                    <p>Parents say you need to do chores?<br>Go do them for someone else!</p>
+                </a>
+            </div>
+            <div class="listing">
+                <a href="tasks.html">
+                    <h3>💬 Conversations</h3>
+                    <p>Ever need someone to talk to?<br>An elderly needs someone too!</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="signup">
+        <div class="container">
+            <h2>Sign Up Now</h2>
+            <p>Join our community and start earning time credits by helping the elderly in your area.</p>
+            <a href="dashboard.html" class="button">Sign Up</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 TimeBank. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

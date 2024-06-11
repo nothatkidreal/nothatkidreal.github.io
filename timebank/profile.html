@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7e6d4;
+            /* Changed to match the light theme of the first page */
+            color: #333;
+            /* Changed to match the light theme text color */
+        }
+
+        .navbar {
+            background-color: #f5c89d;
+            /* Changed to match the first page navbar color */
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .p {
+            font-size: 14px;
+            /* Adjust as needed */
+        }
+
+        .navbar a {
+            color: inherit;
+            /* Changed to inherit the white color from navbar for consistency */
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .navbar a:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            /* This will create consistent spacing between items like the first page */
+        }
+
+
+        .main-content {
+            padding: 2rem;
+            padding-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .profile-section {
+            background-color: #fff;
+            /* Kept white to maintain legibility */
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Lightened shadow for consistency with light theme */
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #f5c89d;
+            /* Border color matched to the navbar */
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .profile-pic:hover {
+            opacity: 0.8;
+        }
+
+        .name-input {
+            background: none;
+            border: none;
+            border-bottom: 2px solid #f5c89d;
+            /* Input underline color matched to the navbar */
+            color: #333;
+            /* Text color for better visibility in light theme */
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .name-input:focus {
+            outline: none;
+        }
+
+        .profile-details {
+            margin-top: 1rem;
+        }
+
+        .insurer-name {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #333;
+            /* Text color for better visibility in light theme */
+        }
+
+        .delete-button,
+        .share-button {
+            background-color: #f5c89d;
+            /* Button color matched to the navbar */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        .delete-button:hover,
+        .share-button:hover {
+            background-color: #cca784;
+            /* Darkened hover state for better UI effect */
+        }
+
+        .delete-button.confirm {
+            background-color: #ff594d;
+            /* Kept as an attention-grabbing color for confirmation actions */
+        }
+
+        .delete-button.confirm:hover {
+            background-color: #fd4141;
+            /* Slightly darkened hover state for delete confirmation */
+        }
+
+        .qr-code {
+            margin-top: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="index.html" title="Home">
+                <span class="material-icons">home</span>
+            </a>
+            <a href="dashboard.html" title="Dashboard">
+                <span class="material-icons">dashboard</span>
+            </a>
+            <a href="tasks.html" title="Tasks">
+                <span class="material-icons">task</span>
+            </a>
+            <a href="rewards.html" title="Rewards">
+                <span class="material-icons">redeem</span>
+            </a>
+            <a href="transactions.html" title="Credits">
+                <span class="material-icons">payments</span>
+            </a>
+            <a href="profile.html" title="Profile">
+                <span class="material-icons">account_circle</span>
+            </a>
+            <a href="index.html" title="Logout">
+                <span class="material-icons">exit_to_app</span>
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="profile-section">
+            <img id="profile-pic" class="profile-pic" src="default.png" alt="Profile Picture">
+            <p class="p">(You can click the image above to change your profile picture!)</p>
+            <input type="file" id="file-input" accept="image/*" style="display: none;">
+            <div class="profile-details">
+                <input id="name-input" class="name-input" type="text" value="John Dough">
+                <p class="p">(You can edit your name! Click on your name and edit it with your keyboard!)</p>
+                <p class="insurer-name">Insurer: The Insurance Co.</p>
+            </div>
+            <button id="delete-button" class="delete-button">Delete Account</button>
+            <div id="qrcode" class="qr-code"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const profilePic = document.getElementById('profile-pic');
+            const fileInput = document.getElementById('file-input');
+            const nameInput = document.getElementById('name-input');
+            const deleteButton = document.getElementById('delete-button');
+            const shareButton = document.getElementById('share-button');
+            const qrCodeContainer = document.getElementById('qrcode');
+            let deleteConfirm = false;
+
+            // Function to get URL parameters
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                const results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // Function to update profile with URL parameters
+            function updateProfileFromUrl() {
+                const compressedData = getUrlParameter('data');
+
+                if (compressedData) {
+                    const jsonData = LZString.decompressFromEncodedURIComponent(compressedData);
+                    const data = JSON.parse(jsonData);
+
+                    if (data.profileName) {
+                        localStorage.setItem('profileName', data.profileName);
+                        nameInput.value = data.profileName;
+                    }
+
+                    if (data.profilePic) {
+                        localStorage.setItem('profilePic', data.profilePic);
+                        document.getElementById('profile-pic').src = data.profilePic;
+                    }
+
+                    if (data.yourTasks) {
+                        localStorage.setItem('yourTasks', data.yourTasks);
+                    }
+                }
+            }
+
+            updateProfileFromUrl();
+
+            // Load saved data from localStorage
+            const savedName = localStorage.getItem('profileName');
+            const savedPic = localStorage.getItem('profilePic');
+
+            if (savedName) {
+                nameInput.value = savedName;
+            }
+
+            if (savedPic) {
+                profilePic.src = savedPic;
+            }
+
+            profilePic.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = 256;
+                            canvas.height = 256;
+                            ctx.drawImage(img, 0, 0, 256, 256);
+                            const compressedImage = canvas.toDataURL('image/jpeg', 0.8);
+                            profilePic.src = compressedImage;
+                            localStorage.setItem('profilePic', compressedImage);
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            nameInput.addEventListener('input', () => {
+                localStorage.setItem('profileName', nameInput.value);
+            });
+
+            deleteButton.addEventListener('click', () => {
+                if (!deleteConfirm) {
+                    deleteButton.textContent = "Are you sure?";
+                    deleteButton.classList.add("confirm");
+                    deleteConfirm = true;
+                } else {
+                    localStorage.removeItem('profileName');
+                    localStorage.removeItem('profilePic');
+                    localStorage.removeItem('yourTasks');
+                    window.location.href = "index.html";
+                }
+            });
+
+            shareButton.addEventListener('click', () => {
+                const profileName = localStorage.getItem('profileName');
+                const profilePic = localStorage.getItem('profilePic');
+                const yourTasks = localStorage.getItem('yourTasks');
+
+                const data = {
+                    profileName,
+                    profilePic,
+                    yourTasks
+                };
+
+                const jsonData = JSON.stringify(data);
+                const compressedData = LZString.compressToEncodedURIComponent(jsonData);
+
+                const url = new URL(window.location.href);
+                url.searchParams.set('data', compressedData);
+
+                QRCode.toCanvas(qrCodeContainer, url.toString(), {
+                    width: 150,
+                    margin: 2,
+                }, (error) => {
+                    if (error) console.error(error);
+                    console.log('QR code generated!');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
